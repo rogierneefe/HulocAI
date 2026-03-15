@@ -40,7 +40,7 @@ export function renderOnboarding(container, { health, storage, api, onDone }) {
         </div>
         <div class="onboarding-step">
           <span class="step-num" aria-hidden="true">4</span>
-          <span>Alle verwerking gebeurt lokaal op dit apparaat — niets verlaat het netwerk</span>
+          <span>Alle verwerking gebeurt lokaal op dit apparaat</span>
         </div>
       </div>
 
