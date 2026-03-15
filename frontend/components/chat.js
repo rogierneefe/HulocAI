@@ -76,10 +76,6 @@ export function renderChat(container, { health, storage, api, sharedState }) {
       <!-- Controls bar: always visible above the input -->
       <div class="chat-controls-bar">
         <div id="toggle-wrap-chat" style="flex:1;"></div>
-        <button id="thinking-btn" class="btn btn-secondary btn-sm" aria-label="Denkmodus aan/uit"
-                title="Laat het model nadenken vóór het antwoord (Qwen3)">
-          🧠 Denken
-        </button>
       </div>
 
       <div id="chat-input-row" class="chat-input-row">
@@ -103,7 +99,6 @@ export function renderChat(container, { health, storage, api, sharedState }) {
 
   const toggleWrap   = container.querySelector('#toggle-wrap-chat');
   const toggle       = createModelToggle({ container: toggleWrap, health, api });
-  const thinkingBtn  = container.querySelector('#thinking-btn');
 
   const messagesEl = container.querySelector('#chat-messages');
   const inputEl    = container.querySelector('#chat-input');
@@ -115,16 +110,6 @@ export function renderChat(container, { health, storage, api, sharedState }) {
   /** @type {Array<{role: string, content: string}>} */
   let history = [];
   let streaming = false;
-  let thinkingOn = false;
-
-  // Thinking toggle
-  thinkingBtn.addEventListener('click', () => {
-    thinkingOn = !thinkingOn;
-    thinkingBtn.classList.toggle('active', thinkingOn);
-    thinkingBtn.title = thinkingOn
-      ? 'Denkmodus aan — klik om uit te zetten'
-      : 'Laat het model nadenken vóór het antwoord (Qwen3)';
-  });
 
   function _scrollToBottom() {
     messagesEl.scrollTop = messagesEl.scrollHeight;
@@ -193,7 +178,7 @@ export function renderChat(container, { health, storage, api, sharedState }) {
     try {
       fullText = await api.stream(
         '/chat',
-        { messages: history, quality: toggle.getQualityMode(), enable_thinking: thinkingOn },
+        { messages: history, quality: toggle.getQualityMode(), enable_thinking: false },
         token => {
           fullText += token;
           aiBubble.innerHTML = _renderMarkdown(fullText);

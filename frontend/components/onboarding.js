@@ -21,32 +21,32 @@ export function renderOnboarding(container, { health, storage, api, onDone }) {
 
   container.innerHTML = `
     <div class="onboarding-card">
-      <h2>Welkom bij AI Toolkit</h2>
+      <h2>Welkom bij de AI Toolkit van Hogeschool Utrecht</h2>
 
       ${videoHtml}
 
       <div class="onboarding-steps">
         <div class="onboarding-step">
           <span class="step-num" aria-hidden="true">1</span>
-          <span>Kies een functie in het menu links</span>
+          <span>Kies een functie links: Transcriberen, Samenvatten, Vertalen of Chat</span>
         </div>
         <div class="onboarding-step">
           <span class="step-num" aria-hidden="true">2</span>
-          <span>Stel de kwaliteit in met de Snel&nbsp;/&nbsp;Kwaliteit toggle</span>
+          <span>Kies <strong>Kort</strong> voor een beknopt resultaat of <strong>Uitgebreid</strong> voor meer detail</span>
         </div>
         <div class="onboarding-step">
           <span class="step-num" aria-hidden="true">3</span>
-          <span>Voer tekst in of upload een bestand</span>
+          <span>Voer tekst in of upload een audio- of videobestand</span>
         </div>
         <div class="onboarding-step">
           <span class="step-num" aria-hidden="true">4</span>
-          <span>AI verwerkt alles lokaal — niets verlaat dit systeem</span>
+          <span>Alle verwerking gebeurt lokaal op dit apparaat — niets verlaat het netwerk</span>
         </div>
       </div>
 
       <button id="onboarding-continue-btn" class="btn btn-primary btn-lg"
-              aria-label="Doorgaan naar de applicatie">
-        Ik heb dit bekeken — ga verder
+              aria-label="Doorgaan naar de gebruiksvoorwaarden">
+        Ga verder
       </button>
     </div>
   `;

@@ -87,21 +87,21 @@ async function _fetchHealth() {
   }
 }
 
-function _showTerms(health) {
-  document.getElementById('screen-overlay').classList.remove('hidden');
-  document.getElementById('app-shell').classList.add('hidden');
-  renderTerms(document.getElementById('screen-overlay'), {
-    health,
-    storage,
-    api,
-    onDone: () => _showOnboarding(health),
-  });
-}
-
 function _showOnboarding(health) {
   document.getElementById('screen-overlay').classList.remove('hidden');
   document.getElementById('app-shell').classList.add('hidden');
   renderOnboarding(document.getElementById('screen-overlay'), {
+    health,
+    storage,
+    api,
+    onDone: () => _showTerms(health),
+  });
+}
+
+function _showTerms(health) {
+  document.getElementById('screen-overlay').classList.remove('hidden');
+  document.getElementById('app-shell').classList.add('hidden');
+  renderTerms(document.getElementById('screen-overlay'), {
     health,
     storage,
     api,
@@ -176,10 +176,10 @@ async function boot() {
   const termsAccepted = storage.getTermsAccepted();
   const onboardingDone = storage.getOnboardingCompleted();
 
-  if (termsAccepted !== termsVersion) {
-    _showTerms(health);
-  } else if (onboardingDone !== onboardingVersion) {
+  if (onboardingDone !== onboardingVersion) {
     _showOnboarding(health);
+  } else if (termsAccepted !== termsVersion) {
+    _showTerms(health);
   } else {
     _showApp(health);
   }

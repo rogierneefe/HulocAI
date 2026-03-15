@@ -1,7 +1,10 @@
 """GET /api/health — system health and status endpoint."""
 import logging
+import re
+from pathlib import Path
 
 from fastapi import APIRouter, Request
+from fastapi.responses import PlainTextResponse
 
 from backend.config import settings
 from backend.schemas import HealthResponse
@@ -56,3 +59,16 @@ async def health_check(request: Request) -> HealthResponse:
         terms_version=settings.TERMS_VERSION,
         onboarding_version=settings.ONBOARDING_VERSION,
     )
+
+
+_TERMS_PATH = Path("config/terms.md")
+_FRONTMATTER_RE = re.compile(r"^---\n.*?\n---\n?", re.DOTALL)
+
+
+@router.get("/terms", response_class=PlainTextResponse)
+async def get_terms() -> str:
+    """Return the terms-of-service markdown content (frontmatter stripped)."""
+    if not _TERMS_PATH.exists():
+        return ""
+    raw = _TERMS_PATH.read_text(encoding="utf-8")
+    return _FRONTMATTER_RE.sub("", raw).strip()
