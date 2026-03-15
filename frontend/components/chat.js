@@ -167,19 +167,28 @@ export function renderChat(container, { health, storage, api, sharedState }) {
 
     // Optional thinking indicator bubble (removed after thinking ends)
     let thinkBubble = null;
-    // Streaming assistant bubble (hidden until thinking ends)
+    // Streaming assistant bubble — starts with typing indicator
     const aiBubble = _addBubble('assistant', '');
+    aiBubble.innerHTML = `
+      <div class="typing-indicator" aria-label="Bezig met verwerken">
+        <span></span><span></span><span></span>
+      </div>`;
     let fullText = '';
+    let hasFirstToken = false;
     streaming = true;
     sendBtn.disabled = true;
     inputEl.disabled = true;
-    statusEl.textContent = 'Bezig…';
+    statusEl.textContent = '';
 
     try {
       fullText = await api.stream(
         '/chat',
         { messages: history, quality: toggle.getQualityMode(), enable_thinking: false },
         token => {
+          if (!hasFirstToken) {
+            hasFirstToken = true;
+            aiBubble.innerHTML = '';
+          }
           fullText += token;
           aiBubble.innerHTML = _renderMarkdown(fullText);
           _scrollToBottom();
