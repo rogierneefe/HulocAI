@@ -6,4 +6,5 @@ python-multipart>=0.0.9
 pydantic-settings>=2.5.0
 psutil>=6.0.0
 slowapi>=0.1.9
-mlx-whisper>=0.4.0
+mlx-whisper>=0.4.0     # alleen macOS / Apple Silicon
+faster-whisper>=1.0.0  # Windows / Linux CPU-transcriptie

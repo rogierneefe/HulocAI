@@ -28,7 +28,7 @@ class Settings(BaseSettings):
     # Backend selection
     LLM_BACKEND: str = "ollama"          # "ollama" | "lmstudio"
     LMSTUDIO_URL: str = "http://localhost:1234"
-    WHISPER_BACKEND: str = "whisper_cpp"  # "whisper_cpp" | "local"
+    WHISPER_BACKEND: str = "whisper_cpp"  # "whisper_cpp" | "local" | "faster_whisper"
     MLX_WHISPER_MODEL: str = "mlx-community/whisper-large-v3-turbo"
 
     # OTAP environment profiles

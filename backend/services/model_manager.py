@@ -166,6 +166,9 @@ def get_whisper_client():
     if settings.WHISPER_BACKEND == "local":
         from backend.services.local_whisper import local_whisper_client
         return local_whisper_client
+    if settings.WHISPER_BACKEND == "faster_whisper":
+        from backend.services.faster_whisper_client import faster_whisper_client
+        return faster_whisper_client
     from backend.services.whisper_client import whisper_client
     return whisper_client
 
