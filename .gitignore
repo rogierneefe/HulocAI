@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+*.egg-info/
+
+# Omgeving
+.env
+data/
+
+# Claude Code
+.claude/
+
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Editor
+.vscode/
+*.swp
+
+# Logs
+*.log
+logs/
+
+# Tijdelijke bestanden
+tmp/

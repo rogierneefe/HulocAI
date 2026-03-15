@@ -1,0 +1,39 @@
+<Configuration>
+
+  <!--
+    AI Toolkit — Windows Sandbox configuratie
+    Pas de HostFolder-paden aan naar jouw situatie.
+    Standaard verwacht dit script dat de app-map staat op:
+      C:\AI-Toolkit\HulocAI
+  -->
+
+  <MemoryInMB>6144</MemoryInMB>
+  <Networking>Enable</Networking>
+  <AudioInput>Enable</AudioInput>
+  <VideoInput>Disable</VideoInput>
+  <PrinterRedirection>Disable</PrinterRedirection>
+  <ClipboardRedirection>Enable</ClipboardRedirection>
+
+  <MappedFolders>
+
+    <!-- Project bestanden (read-only) -->
+    <MappedFolder>
+      <HostFolder>C:\AI-Toolkit\HulocAI</HostFolder>
+      <SandboxFolder>C:\AI-Toolkit</SandboxFolder>
+      <ReadOnly>true</ReadOnly>
+    </MappedFolder>
+
+    <!-- Schrijfbare data map (SQLite DB + uploads) -->
+    <MappedFolder>
+      <HostFolder>C:\AI-Toolkit\sandbox-data</HostFolder>
+      <SandboxFolder>C:\AI-Toolkit-Data</SandboxFolder>
+      <ReadOnly>false</ReadOnly>
+    </MappedFolder>
+
+  </MappedFolders>
+
+  <LogonCommand>
+    <Command>powershell -ExecutionPolicy Bypass -WindowStyle Normal -File C:\AI-Toolkit\scripts\sandbox-setup.ps1</Command>
+  </LogonCommand>
+
+</Configuration>

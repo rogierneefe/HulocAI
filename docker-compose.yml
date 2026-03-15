@@ -1,0 +1,58 @@
+services:
+  web:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - OLLAMA_URL=http://ollama:11434
+      - WHISPER_URL=http://whisper:8178
+    env_file:
+      - .env
+    volumes:
+      - ./data:/app/data
+      - ./config:/app/config
+    depends_on:
+      ollama:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+    restart: unless-stopped
+
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11434/api/tags"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    environment:
+      - OLLAMA_NUM_PARALLEL=1
+      - OLLAMA_MAX_LOADED_MODELS=1
+    deploy:
+      resources:
+        limits:
+          memory: 8G
+    restart: unless-stopped
+
+  whisper:
+    image: ghcr.io/ggerganov/whisper.cpp:main-server
+    ports:
+      - "8178:8178"
+    command: ["-m", "/models/ggml-base.bin", "--host", "0.0.0.0", "--port", "8178", "-t", "8"]
+    volumes:
+      - whisper_models:/models
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+    restart: unless-stopped
+
+volumes:
+  ollama_data:
+  whisper_models:

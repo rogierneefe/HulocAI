@@ -1,0 +1,30 @@
+{
+  "version": "1.0",
+  "target_hardware": {
+    "description": "Mac met LM Studio en mlx-whisper"
+  },
+  "functions": {
+    "summarize": {
+      "fast":    { "model": "auto", "min_ram_gb": 2, "context_length": 4096 },
+      "quality": { "model": "auto", "min_ram_gb": 4, "context_length": 32768 }
+    },
+    "translate": {
+      "fast":    { "model": "auto", "min_ram_gb": 2, "context_length": 4096 },
+      "quality": { "model": "auto", "min_ram_gb": 4, "context_length": 32768 }
+    },
+    "chat": {
+      "fast":    { "model": "auto", "min_ram_gb": 2, "context_length": 4096 },
+      "quality": { "model": "auto", "min_ram_gb": 4, "context_length": 32768 }
+    }
+  },
+  "whisper": {
+    "fast":    { "model": "mlx-community/whisper-large-v3-turbo", "min_ram_gb": 2 },
+    "quality": { "model": "mlx-community/whisper-large-v3-turbo", "min_ram_gb": 2 }
+  },
+  "resource_guard": {
+    "max_concurrent_llm_requests": 1,
+    "max_concurrent_whisper_requests": 1,
+    "prevent_simultaneous_llm_and_whisper_quality": true,
+    "ram_headroom_gb": 2
+  }
+}

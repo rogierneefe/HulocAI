@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AI Toolkit — Lokale AI-taalverwerking voor zakelijke medewerkers">
+  <title>AI Toolkit</title>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+
+  <!-- Sandbox / environment banner -->
+  <div id="sandbox-banner" class="hidden" role="banner" aria-label="Omgevingswaarschuwing">
+    ⚠️ Sandbox modus — niet voor productiegebruik
+  </div>
+
+  <!-- Full-screen overlay: terms / onboarding -->
+  <div id="screen-overlay" role="main" aria-label="Gebruiksvoorwaarden of introductie">
+    <div class="loading-row">
+      <span class="spinner" aria-hidden="true"></span>
+      <span>Laden…</span>
+    </div>
+  </div>
+
+  <!-- Main app shell (hidden until terms+onboarding are done) -->
+  <div id="app-shell" class="hidden" role="application" aria-label="AI Toolkit applicatie">
+
+    <!-- Sidebar navigation -->
+    <nav id="sidebar" aria-label="Hoofdnavigatie">
+      <div class="sidebar-logo">
+        <span class="hu-badge" aria-hidden="true">HU</span>
+        <div>
+          <h1>AI Toolkit</h1>
+          <div class="logo-sub">Hogeschool Utrecht</div>
+        </div>
+      </div>
+
+      <ul class="sidebar-nav" role="list">
+        <li class="nav-item" data-route="#transcribe" role="listitem" tabindex="0"
+            aria-label="Navigeer naar Transcriberen">
+          <span class="nav-icon" aria-hidden="true">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <rect x="7" y="2" width="6" height="9" rx="3"/>
+              <path d="M4 10a6 6 0 0 0 12 0"/>
+              <line x1="10" y1="16" x2="10" y2="19"/>
+              <line x1="7" y1="19" x2="13" y2="19"/>
+            </svg>
+          </span>
+          <span>Transcriberen</span>
+        </li>
+        <li class="nav-item" data-route="#summarize" role="listitem" tabindex="0"
+            aria-label="Navigeer naar Samenvatten">
+          <span class="nav-icon" aria-hidden="true">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <path d="M13 2H5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V6z"/>
+              <polyline points="13 2 13 6 17 6"/>
+              <line x1="7" y1="10" x2="13" y2="10"/>
+              <line x1="7" y1="14" x2="11" y2="14"/>
+            </svg>
+          </span>
+          <span>Samenvatten</span>
+        </li>
+        <li class="nav-item" data-route="#translate" role="listitem" tabindex="0"
+            aria-label="Navigeer naar Vertalen">
+          <span class="nav-icon" aria-hidden="true">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="10" cy="10" r="8"/>
+              <line x1="2" y1="10" x2="18" y2="10"/>
+              <path d="M10 2a14 14 0 0 1 3.5 8A14 14 0 0 1 10 18 14 14 0 0 1 6.5 10 14 14 0 0 1 10 2z"/>
+            </svg>
+          </span>
+          <span>Vertalen</span>
+        </li>
+        <li class="nav-item" data-route="#chat" role="listitem" tabindex="0"
+            aria-label="Navigeer naar Chat">
+          <span class="nav-icon" aria-hidden="true">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 3h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H7l-4 3V4a1 1 0 0 1 1-1z"/>
+            </svg>
+          </span>
+          <span>Chat</span>
+        </li>
+        <li class="nav-item hidden" data-route="#admin" role="listitem" tabindex="0"
+            aria-label="Navigeer naar Admin">
+          <span class="nav-icon" aria-hidden="true">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="10" cy="10" r="2.5"/>
+              <path d="M10 2v2M10 16v2M4.22 4.22l1.42 1.42M14.36 14.36l1.42 1.42M2 10h2M16 10h2M4.22 15.78l1.42-1.42M14.36 5.64l1.42-1.42"/>
+            </svg>
+          </span>
+          <span>Admin</span>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <div id="env-badge-wrap" aria-label="Omgevingsindicator"></div>
+        <button id="theme-toggle" class="theme-toggle-btn" aria-label="Wissel licht/donker modus" title="Wissel thema">
+          <svg id="theme-icon-moon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"
+               stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;">
+            <path d="M17.5 11.5A7.5 7.5 0 0 1 8.5 2.5a7.5 7.5 0 1 0 9 9z"/>
+          </svg>
+          <svg id="theme-icon-sun" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"
+               stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;display:none;">
+            <circle cx="10" cy="10" r="3.5"/>
+            <line x1="10" y1="2" x2="10" y2="4"/>
+            <line x1="10" y1="16" x2="10" y2="18"/>
+            <line x1="2" y1="10" x2="4" y2="10"/>
+            <line x1="16" y1="10" x2="18" y2="10"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+            <line x1="14.36" y1="14.36" x2="15.78" y2="15.78"/>
+            <line x1="4.22" y1="15.78" x2="5.64" y2="14.36"/>
+            <line x1="14.36" y1="5.64" x2="15.78" y2="4.22"/>
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Main content area -->
+    <main id="main-content" aria-label="Hoofdinhoud">
+      <!-- Page views are injected here by app.js -->
+    </main>
+
+  </div><!-- /#app-shell -->
+
+  <!-- SPA entry point -->
+  <script type="module" src="js/app.js"></script>
+
+</body>
+</html>

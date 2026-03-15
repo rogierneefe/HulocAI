@@ -1,0 +1,49 @@
+:root {
+  /* Backgrounds — deep navy */
+  --bg-primary:   #0d1520;
+  --bg-secondary: #121e30;
+  --bg-tertiary:  #1a2842;
+  --bg-card:      #162038;
+  --bg-input:     #0f1a2c;
+
+  /* Text */
+  --text-primary:   #dde4ef;
+  --text-secondary: #8796b0;
+  --text-muted:     #4e6080;
+
+  /* Accents */
+  --accent-primary:   #e05206;   /* HU oranje — alleen primaire actieknoppen */
+  --accent-secondary: #c4460a;   /* donkerder oranje — hover */
+  --accent-ui:        #3d7bdb;   /* blauw — toggles, nav, focus, selectie */
+  --accent-ui-hover:  #2d6bc9;   /* blauw hover */
+  --accent-ui-soft:   rgba(61,123,219,0.15); /* lichte blauwe achtergrond */
+
+  /* Statussen */
+  --success: #34d399;
+  --warning: #fbbf24;
+  --error:   #f87171;
+
+  /* Overige */
+  --border-color: #1e3050;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --font-sans: 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'Cascadia Code', 'Consolas', monospace;
+  --sidebar-width: 220px;
+  --header-height: 56px;
+  --transition: 0.15s ease;
+}
+
+[data-theme="light"] {
+  --bg-primary:   #edf2fb;
+  --bg-secondary: #f4f8ff;
+  --bg-tertiary:  #e2eaf8;
+  --bg-card:      #ffffff;
+  --bg-input:     #f0f5ff;
+  --text-primary:   #1a2540;
+  --text-secondary: #4a5878;
+  --text-muted:     #7a8aaa;
+  --border-color:   #c5d5ea;
+  --accent-ui-soft: rgba(61,123,219,0.10);
+}
