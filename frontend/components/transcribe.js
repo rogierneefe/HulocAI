@@ -31,16 +31,13 @@ export function renderTranscribe(container, { health, storage, api, sharedState 
 
     <div id="toggle-wrap-transcribe"></div>
 
-    <div class="card">
-      <div class="label">Taal (optioneel)</div>
-      <select id="transcribe-lang" class="input" aria-label="Taal selecteren" style="max-width:220px;">
-        <option value="">Auto-detectie</option>
-        <option value="nl">Nederlands</option>
-        <option value="en">Engels</option>
-        <option value="fr">Frans</option>
-        <option value="de">Duits</option>
-        <option value="es">Spaans</option>
-      </select>
+    <div class="card" style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
+      <span class="label" style="margin:0;">Taal</span>
+      <div class="btn-group" role="group" aria-label="Taal voor transcriptie">
+        <button class="btn btn-sm btn-group-item" data-lang="nl" aria-pressed="true">NL</button>
+        <button class="btn btn-sm btn-group-item" data-lang="en" aria-pressed="false">EN</button>
+        <button class="btn btn-sm btn-group-item" data-lang=""  aria-pressed="false">Auto</button>
+      </div>
     </div>
 
     <div class="upload-zone" id="upload-zone" role="button" tabindex="0"
@@ -97,6 +94,21 @@ export function renderTranscribe(container, { health, storage, api, sharedState 
   // Model toggle
   const toggleWrap = container.querySelector('#toggle-wrap-transcribe');
   const toggle = createModelToggle({ container: toggleWrap, health, api });
+
+  // Taalknopjes — standaard NL
+  let selectedLang = 'nl';
+  container.querySelectorAll('.btn-group-item[data-lang]').forEach(btn => {
+    if (btn.dataset.lang === selectedLang) btn.classList.add('active');
+    btn.addEventListener('click', () => {
+      container.querySelectorAll('.btn-group-item[data-lang]').forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-pressed', 'false');
+      });
+      btn.classList.add('active');
+      btn.setAttribute('aria-pressed', 'true');
+      selectedLang = btn.dataset.lang;
+    });
+  });
 
   // File state
   let selectedFile = null;
@@ -170,8 +182,7 @@ export function renderTranscribe(container, { health, storage, api, sharedState 
 
     const formData = new FormData();
     formData.append('audio', selectedFile);
-    const lang = container.querySelector('#transcribe-lang').value;
-    if (lang) formData.append('language', lang);
+    if (selectedLang) formData.append('language', selectedLang);
     formData.append('quality', toggle.getQualityMode());
 
     try {
